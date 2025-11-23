@@ -3,12 +3,12 @@ import matplotlib.pyplot as plt
 from collections import deque
 import random
 
-L = 20 
+L = 100 
 p = 0.59
 q = deque()
 
 
-def pbc(j, L):
+def pbc(j):
     return j % L
 
 def initialize_grid(L):
@@ -32,11 +32,32 @@ lattice = initialize_grid(L)
 
 licznik = 0 
 while q:
-    x_index, y_index = q[0]
+    row_index, col_index = q[0]
+    random_num = np.random.random()
     
-    for i in range(4):
-        if (lattice[x_index, pbc(y_index + 1)] != -1):
-            pass
+        
+    #Na prawo
+    row_index = row_index
+    col_index = pbc(col_index + 1)
+        
+    if (lattice[row_index, col_index] == -1):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+
+    #Do góry 
+    row_index = row_index + 1
+    col_index = col_index
+        
+    if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+    
     
     q.popleft()
     
