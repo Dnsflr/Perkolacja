@@ -31,7 +31,7 @@ def initialize_grid(L):
 
 def check_up_down(row_index,col_index):
     if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
-        if (random_num < p):
+        if (np.random.random() < p):
             lattice[row_index, col_index] = 1
             q.append([row_index, col_index])
         else:
@@ -39,7 +39,7 @@ def check_up_down(row_index,col_index):
             
 def check_sides(row_index,col_index):
     if (lattice[row_index, col_index] == -1):
-        if (random_num < p):
+        if (np.random.random() < p):
             lattice[row_index, col_index] = 1
             q.append([row_index, col_index])
         else:
@@ -51,32 +51,31 @@ lattice = initialize_grid(L)
 licznik = 0 
 while q:
     row_index, col_index = q[0]
-    random_num = np.random.random()
     
     #W dół 
-    row_index = row_index + 1
-    col_index = col_index
+    nr = row_index + 1
+    nc = col_index
         
-    check_up_down(row_index, col_index)
+    check_up_down(nr, nc)
     
         
     #Na prawo
-    row_index = row_index
-    col_index = pbc(col_index + 1)
+    nr = row_index
+    nc = pbc(col_index + 1)
         
-    check_sides(row_index, col_index)
+    check_sides(nr, nc)
 
     #Do góry 
-    row_index = row_index - 1
-    col_index = col_index
+    nr = row_index - 1
+    nc = col_index
         
-    check_up_down(row_index, col_index)
+    check_up_down(nr, nc)
     
     #Lewo
-    row_index = row_index 
-    col_index = pbc(col_index - 1)
+    nr = row_index 
+    nc = pbc(col_index - 1)
         
-    check_sides(row_index, col_index)
+    check_sides(nr, nc)
             
             
     q.popleft()
