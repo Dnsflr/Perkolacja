@@ -27,6 +27,24 @@ def initialize_grid(L):
                 pass
     
     return lattice
+
+
+def check_up_down(row_index,col_index):
+    if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+            
+def check_sides(row_index,col_index):
+    if (lattice[row_index, col_index] == -1):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+    
     
 lattice = initialize_grid(L)
 
@@ -39,46 +57,26 @@ while q:
     row_index = row_index + 1
     col_index = col_index
         
-    if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
-        if (random_num < p):
-            lattice[row_index, col_index] = 1
-            q.append([row_index, col_index])
-        else:
-            lattice[row_index, col_index] = 0
+    check_up_down(row_index, col_index)
     
         
     #Na prawo
     row_index = row_index
     col_index = pbc(col_index + 1)
         
-    if (lattice[row_index, col_index] == -1):
-        if (random_num < p):
-            lattice[row_index, col_index] = 1
-            q.append([row_index, col_index])
-        else:
-            lattice[row_index, col_index] = 0
+    check_sides(row_index, col_index)
 
     #Do góry 
     row_index = row_index - 1
     col_index = col_index
         
-    if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
-        if (random_num < p):
-            lattice[row_index, col_index] = 1
-            q.append([row_index, col_index])
-        else:
-            lattice[row_index, col_index] = 0
+    check_up_down(row_index, col_index)
     
     #Lewo
     row_index = row_index 
     col_index = pbc(col_index - 1)
         
-    if ((lattice[row_index, col_index] == -1)):
-        if (random_num < p):
-            lattice[row_index, col_index] = 1
-            q.append([row_index, col_index])
-        else:
-            lattice[row_index, col_index] = 0
+    check_sides(row_index, col_index)
             
             
     q.popleft()
