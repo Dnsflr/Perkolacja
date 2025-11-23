@@ -35,6 +35,17 @@ while q:
     row_index, col_index = q[0]
     random_num = np.random.random()
     
+    #W dół 
+    row_index = row_index + 1
+    col_index = col_index
+        
+    if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+    
         
     #Na prawo
     row_index = row_index
@@ -48,7 +59,7 @@ while q:
             lattice[row_index, col_index] = 0
 
     #Do góry 
-    row_index = row_index + 1
+    row_index = row_index - 1
     col_index = col_index
         
     if ((lattice[row_index, col_index] == -1) and (lattice[row_index, col_index] != -2)):
@@ -57,6 +68,19 @@ while q:
             q.append([row_index, col_index])
         else:
             lattice[row_index, col_index] = 0
+    
+    #Lewo
+    row_index = row_index 
+    col_index = pbc(col_index - 1)
+        
+    if ((lattice[row_index, col_index] == -1)):
+        if (random_num < p):
+            lattice[row_index, col_index] = 1
+            q.append([row_index, col_index])
+        else:
+            lattice[row_index, col_index] = 0
+            
+    
     
     
     q.popleft()
