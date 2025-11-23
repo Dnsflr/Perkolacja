@@ -80,9 +80,7 @@ while q:
         else:
             lattice[row_index, col_index] = 0
             
-    
-    
-    
+            
     q.popleft()
     
 
