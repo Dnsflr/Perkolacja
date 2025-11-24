@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from collections import deque
 import random
 
+import matplotlib.animation as animation
+
 L = 100 
 p = 0.59
 q = deque()
@@ -48,7 +50,15 @@ def check_sides(row_index,col_index):
     
 lattice = initialize_grid(L)
 
-licznik = 0 
+#anim
+fig, ax = plt.subplots(figsize=(8, 8)) 
+ax.set_title(f"Ewolucja (L={L}, p={p})")
+frames = [] 
+
+im_start = ax.imshow(lattice.copy(), interpolation='nearest', cmap='magma', animated=True)
+frames.append([im_start])
+
+licznik = 0
 while q:
     row_index, col_index = q[0]
     
@@ -76,10 +86,29 @@ while q:
     nc = pbc(col_index - 1)
         
     check_sides(nr, nc)
-            
+    
+    licznik += 1        
+    SAVE_EVERY_N_STEPS = 50
+     
+    if licznik % SAVE_EVERY_N_STEPS == 0:
+        im = ax.imshow(lattice.copy(), interpolation='nearest', cmap='magma', animated=True)
+        frames.append([im])
+        if licznik % 1000 == 0:
+            print(f"Krok symulacji: {licznik}, rozmiar kolejki: {len(q)}")
             
     q.popleft()
-    
+
+
+im_final = ax.imshow(lattice.copy(), interpolation='nearest', cmap='magma', animated=True)
+frames.append([im_final])
+
+ani = animation.ArtistAnimation(fig, frames, interval=30, blit=True, repeat_delay=2000)
+
+ani.save('ewolucja_perkolacji.gif', writer='pillow', fps=30)
+
+plt.imshow(lattice, interpolation= 'nearest', cmap= 'magma')
+
+plt.show()
 
 plt.imshow(lattice, interpolation= 'nearest', cmap= 'magma')
 
