@@ -88,14 +88,12 @@ while q:
     check_sides(nr, nc)
     
     licznik += 1        
-    SAVE_EVERY_N_STEPS = 50
+    SAVE_EVERY_N_STEPS = 25
      
     if licznik % SAVE_EVERY_N_STEPS == 0:
         im = ax.imshow(lattice.copy(), interpolation='nearest', cmap='magma', animated=True)
         frames.append([im])
-        if licznik % 1000 == 0:
-            print(f"Krok symulacji: {licznik}, rozmiar kolejki: {len(q)}")
-            
+        
     q.popleft()
 
 
